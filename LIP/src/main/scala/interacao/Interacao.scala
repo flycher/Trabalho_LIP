@@ -55,38 +55,46 @@ class Interacao {
   }
 
   def remLivro(): Unit = {
-    println("Digite o id do livo: ")
-    val id: Int = entrada.readInt
-    if(livraria.getLivro(id)) {
-      livraria.showLivro(id)
-      var qtd: Int = -1
-      while (qtd < 0) {
-        print("Digite a quantidade de livros a ser removidos: ")
-        qtd = entrada.readInt
-      }
-      if (livraria.remLivro(id, qtd))
-        println("Estoque atualizado com sucesso.")
-    } else
+    if(livraria.checkEstoque())
+      println("Nenhum livro cadastrado.")
+    else {
+      println("Digite o id do livo: ")
+      val id: Int = entrada.readInt
+      if (livraria.getLivro(id)) {
+        livraria.showLivro(id)
+        var qtd: Int = -1
+        while (qtd < 0) {
+          print("Digite a quantidade de livros a ser removidos: ")
+          qtd = entrada.readInt
+        }
+        if (livraria.remLivro(id, qtd))
+          println("Estoque atualizado com sucesso.")
+      } else
         println("Livro não está cadastrado na livraria.")
+    }
   }
 
   def excluirLivro(): Unit = {
-    print("Digite o id do livo: ")
-    val id = entrada.readInt
-    if(livraria.getLivro(id)) {
-      livraria.showLivro(id)
-      println("Digite 'true' para confirmar remoção, 'false' para cancelar")
-      val confirmar = entrada.readBoolean
-      if(confirmar) {
-        livraria.excluirLivro(id)
-        println("Livro removido com sucesso.")
+    if(livraria.checkEstoque())
+      println("Nenhum livro cadastrado.")
+    else {
+      print("Digite o id do livo: ")
+      val id = entrada.readInt
+      if (livraria.getLivro(id)) {
+        livraria.showLivro(id)
+        println("Digite 'true' para confirmar remoção, 'false' para cancelar")
+        val confirmar = entrada.readBoolean
+        if (confirmar) {
+          livraria.excluirLivro(id)
+          println("Livro removido com sucesso.")
+        }
+        else
+          println("Remoção cancelada.")
+
       }
       else
-        println("Remoção cancelada.")
-
+        println("Livro não está cadastrado na livraria.")
     }
-    else
-      println("Livro não está cadastrado na livraria.")
   }
 
   def cadastrarLivro(): Unit = {
@@ -122,12 +130,20 @@ class Interacao {
   }
 
   def showLivro(): Unit = {
-    print("Digite o id do livro: ")
-    val uid: Int = entrada.readInt
-    livraria.showLivro(uid)
+    if(livraria.checkEstoque())
+      println("Nenhum livro cadastrado.")
+    else {
+      print("Digite o id do livro: ")
+      val uid: Int = entrada.readInt
+      livraria.showLivro(uid)
+    }
   }
 
   def showLivros(): Unit = {
-    livraria.showLivros()
+    if(livraria.checkEstoque())
+      println("Nenhum livro cadastrado.")
+    else {
+      livraria.showLivros()
+    }
   }
 }
