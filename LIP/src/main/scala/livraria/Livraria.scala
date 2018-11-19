@@ -71,5 +71,10 @@ class Livraria {
       println("Livro não está cadastrado na livraria.")
   }
 
-  def showLivros(): Unit = livros.values.foreach(livro => println(livro))
+  def showLivros(): Unit = {
+    if(livros.isEmpty)
+      println("Nenhum livro cadastrado.")
+    else
+      livros.values.foreach(livro => println(livro))
+  }
 }
