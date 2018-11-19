@@ -32,7 +32,7 @@ class Interacao {
         case _  => println("Opção Inválida!")
       }
       if(continuar) {
-        println("Deseja continuar? 'true' para continuar, 'false' para sair: ")
+        println("Deseja continuar? \"true\" para continuar, \"false\" para sair: ")
         continuar = entrada.readBoolean
       }
     }
@@ -82,7 +82,7 @@ class Interacao {
       val id = entrada.readInt
       if (livraria.getLivro(id)) {
         livraria.showLivro(id)
-        println("Digite 'true' para confirmar remoção, 'false' para cancelar")
+        println("Digite \"true\" para confirmar remoção, \"false\" para cancelar")
         val confirmar = entrada.readBoolean
         if (confirmar) {
           livraria.excluirLivro(id)
@@ -117,11 +117,11 @@ class Interacao {
       val qtd = entrada.readInt
       var capa: Boolean = false
       if (tipo == 2) {
-        print("Capa dura ou normal ('true' = dura, 'false' = normal): ")
+        print("Capa dura ou normal (\"true\" = dura, \"false\" = normal): ")
         capa = entrada.readBoolean
       }
       else if (tipo == 3) {
-        print("Capa brochura ou normal ('true' = brochura, 'false' = normal): ")
+        print("Capa brochura ou normal (\"true\" = brochura, \"false\" = normal): ")
         capa = entrada.readBoolean
       }
       if(livraria.cadastrarLivro(tipo, nome, valor, qtd, uid, capa))
