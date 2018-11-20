@@ -74,4 +74,12 @@ class Livraria {
   def showLivros(): Unit = livros.values.foreach(livro => println(livro))
 
   def checkEstoque(): Boolean = livros.isEmpty
+
+  def venderLivro(id: Int, qtd: Int): Double = {
+    val venda = livros(id)
+    if (venda.getQtdEstoque >= qtd)
+      venda.getValor * qtd
+    else
+      -1
+  }
 }

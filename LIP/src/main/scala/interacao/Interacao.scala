@@ -18,6 +18,7 @@ class Interacao {
       println("\t4 Remover livros.")
       println("\t5 Consultar estoque.")
       println("\t6 Consultar livro.")
+      println("\t7 Vender livro.")
       println("\t0 Para sair.")
       print("> ")
       opcao = entrada.readInt
@@ -27,12 +28,13 @@ class Interacao {
         case 3  => addLivro()
         case 4  => remLivro()
         case 5  => showLivros()
-        case 6 => showLivro()
-        case 0 => continuar = false
+        case 6  => showLivro()
+        case 7  => venderLivro()
+        case 0  => continuar = false
         case _  => println("Opção Inválida!")
       }
       if(continuar) {
-        println("Deseja continuar? \"true\" para continuar, \"false\" para sair: ")
+        println("Deseja retornar ao menu principal? \"true\" para retornar, \"false\" para sair: ")
         continuar = entrada.readBoolean
       }
     }
@@ -44,8 +46,8 @@ class Interacao {
     if(livraria.getLivro(id)) {
       livraria.showLivro(id)
       var qtd: Int = -1
+      print("Digite a quantidade de livros a ser adicionados: ")
       while (qtd < 0) {
-        print("Digite a quantidade de livros a ser adicionados: ")
         qtd = entrada.readInt
       }
       if (livraria.addLivro(id, qtd))
@@ -63,8 +65,8 @@ class Interacao {
       if (livraria.getLivro(id)) {
         livraria.showLivro(id)
         var qtd: Int = -1
+        print("Digite a quantidade de livros a ser removidos: ")
         while (qtd < 0) {
-          print("Digite a quantidade de livros a ser removidos: ")
           qtd = entrada.readInt
         }
         if (livraria.remLivro(id, qtd))
@@ -114,7 +116,10 @@ class Interacao {
       print("Digite o valor do livro: ")
       val valor: Double = entrada.readDouble
       print("Digite a quantidade em estoque: ")
-      val qtd = entrada.readInt
+      var qtd: Int = -1
+      while (qtd < 0) {
+        qtd = entrada.readInt
+      }
       var capa: Boolean = false
       if (tipo == 2) {
         print("Capa dura ou normal (\"true\" = dura, \"false\" = normal): ")
@@ -144,6 +149,37 @@ class Interacao {
       println("Nenhum livro cadastrado.")
     else {
       livraria.showLivros()
+    }
+  }
+
+  def venderLivro(): Unit = {
+    if(livraria.checkEstoque())
+      println("Nenhum livro cadastrado.")
+    else {
+      print("Digite o id do livo: ")
+      val id = entrada.readInt
+      if (livraria.getLivro(id)) {
+        livraria.showLivro(id)
+        println("Digite a quantidade a ser vendida.")
+        var qtd: Int = -1
+        while (qtd < 0) {
+          qtd = entrada.readInt
+        }
+        val preco: Double = livraria.venderLivro(id, qtd)
+        if(preco != -1) {
+          println(s"$qtd copias do livro custarão $preco")
+          println("Para confirmar a venda digite \"true\", para cancelar digite \"false\".")
+          val confirma: Boolean = entrada.readBoolean
+          if (confirma) {
+            livraria.remLivro(id, qtd)
+            println("Venda realizada com sucesso!")
+          } else
+            println("Venda cancelada.")
+        } else
+            println("Quantidade em estoque insuficiente.")
+      }
+      else
+        println("Livro não está cadastrado na livraria.")
     }
   }
 }
